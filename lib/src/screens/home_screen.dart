@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:playwithme/src/constants/app_config.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,17 +11,36 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> _objectPoints = [];
   Offset objectPoint;
   bool shouldJoinPoints = false;
+  String _dropDownValue = 'Drag';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          FlatButton(
-              child: Text(shouldJoinPoints ? 'Select Points' : 'Draw Shape',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
-              onPressed: () {
-                joinPoints();
-              })
+      floatingActionButton: SpeedDial(
+        marginRight: 18,
+        marginBottom: 20,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.accessibility),
+            backgroundColor: Colors.red,
+            label: shouldJoinPoints ? 'Select Points' : 'Draw Object',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => joinPoints(),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.accessibility),
+            backgroundColor: Colors.red,
+            label: 'Reset',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () {
+              setState(() {
+                _objectPoints.clear();
+                shouldJoinPoints = false;
+              });
+            },
+          ),
         ],
       ),
       body: GestureDetector(
@@ -49,6 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       shouldJoinPoints = !shouldJoinPoints;
     });
+  }
+
+  void dragObject() {
+    print('dragObject :/');
   }
 }
 
