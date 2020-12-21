@@ -7,32 +7,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Offset _lineStartPoint = Offset(0, 0), _lineEndPoint = Offset(0, 0);
+  List<Offset> _objectPoints = [];
+  Offset objectPoint;
+  bool shouldJoinPoints = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          FlatButton(
+              child: Text(shouldJoinPoints ? 'Select Points' : 'Draw Shape',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
+              onPressed: () {
+                joinPoints();
+              })
+        ],
+      ),
       body: GestureDetector(
-        onPanStart: (details) {
-          _lineStartPoint = details.globalPosition;
+        onTapDown: (details) {
+          if (!shouldJoinPoints) {
+            setState(() {
+              _objectPoints.add(details.globalPosition);
+            });
+          }
         },
-        onPanUpdate: (details) {
-          setState(() {
-            _lineEndPoint = details.globalPosition;
-          });
-        },
-        // onPanStart: (details) {
-        //   _lineStartPoint = details.globalPosition;
-        // },
-        // onPanEnd: (details) {
-        //   _lineStartPoint = details.globalPosition;
-        //   setState(() {});
-        // },
         child: Container(
           color: AppConfig.backgroundColor,
           child: CustomPaint(
             painter: ObjectPainter(
-              lineStartPoint: _lineStartPoint,
-              lineEndPoint: _lineEndPoint,
+              objectPoints: _objectPoints,
+              shouldJoinPoints: shouldJoinPoints,
             ),
             child: Container(),
           ),
@@ -40,29 +44,51 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void joinPoints() {
+    setState(() {
+      shouldJoinPoints = !shouldJoinPoints;
+    });
+  }
 }
 
 class ObjectPainter extends CustomPainter {
-  ObjectPainter({
-    this.lineStartPoint,
-    this.lineEndPoint,
-  });
-  final Offset lineStartPoint;
-  final Offset lineEndPoint;
+  ObjectPainter({this.objectPoints, this.shouldJoinPoints});
+  final List<Offset> objectPoints;
+  final bool shouldJoinPoints;
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
       ..color = AppConfig.objectColor
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
-    // Offset startingPoint = Offset(0, size.height / 2);
-    // Offset endingPoint = Offset(size.width - 10, size.height / 2);
-    print('$lineStartPoint, $lineEndPoint');
-    canvas.drawLine(lineStartPoint, lineEndPoint, paint);
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 1);
+    var objectPaint = Paint()..color = AppConfig.objectColor;
+    if (!shouldJoinPoints) {
+      objectPoints.forEach((e) {
+        canvas.drawCircle(e, 5.0, paint);
+      });
+    } else {
+      drawObject(canvas, objectPaint);
+    }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  void drawObject(Canvas canvas, Paint paint) {
+    if (objectPoints == null ||
+        objectPoints.isEmpty ||
+        objectPoints.length <= 2) {
+      print('Not enough points');
+      return;
+    }
+    var path = Path()..moveTo(objectPoints.first.dx, objectPoints.first.dy);
+    for (int i = 1; i < objectPoints.length - 1; ++i) {
+      path.lineTo(objectPoints[i].dx, objectPoints[i].dy);
+    }
+    path.lineTo(objectPoints.last.dx, objectPoints.last.dy);
+    path.close();
+    canvas.drawPath(path, paint);
   }
 }
