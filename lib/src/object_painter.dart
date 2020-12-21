@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'constants/app_config.dart';
 
 class ObjectPainter extends CustomPainter {
-  ObjectPainter({
-    this.objectPoints,
-    this.shouldJoinPoints,
-    this.objectColor = AppConfig.objectColor,
-  });
+  ObjectPainter(
+      {this.objectPoints,
+      this.shouldJoinPoints,
+      this.objectColor = AppConfig.objectColor,
+      this.shouldBrushPaint = false,
+      this.brushContactPoints,
+      this.brushColor});
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
   final Color objectColor;
+  final bool shouldBrushPaint;
+  final List<Offset> brushContactPoints;
+  final Color brushColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
@@ -18,10 +24,16 @@ class ObjectPainter extends CustomPainter {
     var objectPaint = Paint()..color = objectColor;
     if (!shouldJoinPoints) {
       objectPoints.forEach((e) {
-        canvas.drawCircle(e, 5.0, paint);
+        canvas.drawCircle(e, AppConfig.objectPointRadius, paint);
       });
     } else {
       drawObject(canvas, objectPaint);
+    }
+    if (shouldBrushPaint) {
+      var brushPaint = Paint()..color = brushColor;
+      brushContactPoints.forEach((e) {
+        canvas.drawCircle(e, AppConfig.brushRadius, brushPaint);
+      });
     }
   }
 

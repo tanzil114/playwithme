@@ -5,6 +5,7 @@ import 'package:playwithme/src/helper/helper.dart';
 import 'package:playwithme/src/screens/color_interaction_screen.dart';
 
 import '../object_painter.dart';
+import 'brush_interaction_screen.dart';
 import 'drag_interaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Offset> _objectPoints = [];
   Offset objectPoint;
   bool shouldJoinPoints = false;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _showAlertDialog();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                             ),
+                            ListTile(
+                              title: Text('Brush'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        BrushInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ));
               }
@@ -97,8 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.red,
             label: 'Info',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Helper.showAlertDialog(context, 'Draw Object',
-                'Select at least 3 points by tapping on the screen, and press Draw Object to draw the object'),
+            onTap: () => _showAlertDialog(),
           ),
         ],
       ),
@@ -131,5 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       shouldJoinPoints = !shouldJoinPoints;
     });
+  }
+
+  void _showAlertDialog() {
+    Helper.showAlertDialog(context, 'Draw Object',
+        'Select at least 3 points by tapping on the screen, and press Draw Object to draw the object');
   }
 }
