@@ -19,14 +19,9 @@ class _DragInteractionScreenState extends State<DragInteractionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      // floatingActionButton: Container(
-      //   margin: EdgeInsets.only(left: 8, top: 16),
-      //   child: FloatingActionButton(
-      //     onPressed: () => Navigator.pop(context),
-      //     child: Icon(Icons.arrow_back),
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: Text('Drag Interaction'),
+      ),
       floatingActionButton: SpeedDial(
         marginRight: 18,
         marginBottom: 60,
@@ -46,7 +41,7 @@ class _DragInteractionScreenState extends State<DragInteractionScreen> {
             backgroundColor: Colors.red,
             label: 'Info',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Helper.showAlertDialog(context, 'Drag Object',
+            onTap: () => Helper.showAlertDialog(context, 'Drag Interaction',
                 'Place your finger on the object and move it to drag the object'),
           ),
         ],

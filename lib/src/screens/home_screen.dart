@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:playwithme/src/constants/app_config.dart';
 import 'package:playwithme/src/helper/helper.dart';
+import 'package:playwithme/src/screens/color_interaction_screen.dart';
 
 import '../object_painter.dart';
 import 'drag_interaction_screen.dart';
@@ -32,12 +33,42 @@ class _HomeScreenState extends State<HomeScreen> {
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
               if (Helper.haveEnoughPoints(context, _objectPoints)) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DragInteractionScreen(
-                              objectPoints: _objectPoints,
-                            )));
+                showDialog(
+                    context: context,
+                    builder: (dialogContext) => SimpleDialog(
+                          title: Text('Choose an Interaction'),
+                          children: [
+                            ListTile(
+                              title: Text('Drag'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DragInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Color'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ColorInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ));
               }
             },
           ),
