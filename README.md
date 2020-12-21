@@ -1,16 +1,10 @@
 # playwithme
 
-A new Flutter project.
+A Flutter Project that allows you to create an object and interact with it in different ways.
 
-## Getting Started
+## Summary
 
-This project is a starting point for a Flutter application.
+The project allows the user to create the object by placing different points on the screen, and then joining them to form a solid shape. The user can then interact with that object in several fun ways.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Drag Interaction
+- Color Interaction
