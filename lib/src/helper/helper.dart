@@ -1,5 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Helper {
   static bool haveEnoughPoints(BuildContext context, List objectPoints) {
@@ -20,5 +21,29 @@ class Helper {
       message: message,
       duration: Duration(seconds: 3),
     )..show(context);
+  }
+
+  static showAlertDialog(BuildContext context, String title, String message) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(title ?? ''),
+      content: Text(message ?? ''),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

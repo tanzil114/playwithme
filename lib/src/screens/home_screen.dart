@@ -4,6 +4,7 @@ import 'package:playwithme/src/constants/app_config.dart';
 import 'package:playwithme/src/helper/helper.dart';
 
 import '../object_painter.dart';
+import 'drag_interaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,13 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
-            child: Icon(Icons.play_arrow),
+            child: Icon(Icons.arrow_forward),
             backgroundColor: Colors.red,
             label: 'Next',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
               if (Helper.haveEnoughPoints(context, _objectPoints)) {
-                print('Next');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DragInteractionScreen(
+                              objectPoints: _objectPoints,
+                            )));
               }
             },
           ),
@@ -54,6 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 Helper.showFlushbar(context, 'Reset Successfully!');
               });
             },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.info),
+            backgroundColor: Colors.red,
+            label: 'Info',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => Helper.showAlertDialog(context, 'Draw Object',
+                'Select at least 3 points by tapping on the screen, and press Draw Object to draw the object'),
           ),
         ],
       ),
