@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'constants/app_config.dart';
+import 'dart:ui' as ui;
 
 class ObjectPainter extends CustomPainter {
-  ObjectPainter({
-    this.objectPoints,
-    this.shouldJoinPoints,
-    this.objectColor = AppConfig.objectColor,
-    this.shouldBrushPaint = false,
-    this.brushContactPoints,
-    this.brushColor,
-    this.erasePoints,
-    this.objectBlurSigma = -1,
-  });
+  ObjectPainter(
+      {this.objectPoints,
+      this.shouldJoinPoints,
+      this.objectColor = AppConfig.objectColor,
+      this.shouldBrushPaint = false,
+      this.brushContactPoints,
+      this.brushColor,
+      this.erasePoints,
+      this.objectBlurSigma = -1,
+      this.gradientColorList});
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
   final Color objectColor;
@@ -20,6 +21,7 @@ class ObjectPainter extends CustomPainter {
   final Color brushColor;
   final List<Offset> erasePoints;
   final double objectBlurSigma;
+  final List<Color> gradientColorList;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -32,7 +34,11 @@ class ObjectPainter extends CustomPainter {
     }
     var objectPaint = Paint()
       ..color = objectColor
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, currentObjectBlurSigma);
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, currentObjectBlurSigma)
+      ..shader = gradientColorList != null
+          ? ui.Gradient.linear(
+              objectPoints.first, objectPoints.last, gradientColorList)
+          : null;
     if (!shouldJoinPoints) {
       objectPoints.forEach((e) {
         canvas.drawCircle(e, AppConfig.objectPointRadius, paint);
