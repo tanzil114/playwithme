@@ -7,6 +7,7 @@ import 'package:playwithme/src/screens/color_interaction_screen.dart';
 import '../object_painter.dart';
 import 'brush_interaction_screen.dart';
 import 'drag_interaction_screen.dart';
+import 'erase_interaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -85,6 +86,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         BrushInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Erase'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EraseInteractionScreen(
                                       objectPoints: _objectPoints,
                                     ),
                                   ),

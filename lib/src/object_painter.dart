@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'constants/app_config.dart';
 
 class ObjectPainter extends CustomPainter {
-  ObjectPainter(
-      {this.objectPoints,
-      this.shouldJoinPoints,
-      this.objectColor = AppConfig.objectColor,
-      this.shouldBrushPaint = false,
-      this.brushContactPoints,
-      this.brushColor});
+  ObjectPainter({
+    this.objectPoints,
+    this.shouldJoinPoints,
+    this.objectColor = AppConfig.objectColor,
+    this.shouldBrushPaint = false,
+    this.brushContactPoints,
+    this.brushColor,
+    this.erasePoints,
+  });
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
   final Color objectColor;
   final bool shouldBrushPaint;
   final List<Offset> brushContactPoints;
   final Color brushColor;
+  final List<Offset> erasePoints;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -35,6 +38,7 @@ class ObjectPainter extends CustomPainter {
         canvas.drawCircle(e, AppConfig.brushRadius, brushPaint);
       });
     }
+    _handleErase(canvas);
   }
 
   @override
@@ -50,5 +54,15 @@ class ObjectPainter extends CustomPainter {
     path.lineTo(objectPoints.last.dx, objectPoints.last.dy);
     path.close();
     canvas.drawPath(path, paint);
+  }
+
+  void _handleErase(Canvas canvas) {
+    if (erasePoints == null || erasePoints.isEmpty) {
+      return;
+    }
+    var erasePaint = Paint()..color = AppConfig.backgroundColor;
+    erasePoints.forEach((e) {
+      canvas.drawCircle(e, AppConfig.eraseRadius, erasePaint);
+    });
   }
 }
