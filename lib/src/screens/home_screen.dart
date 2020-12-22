@@ -11,6 +11,7 @@ import 'brush_interaction_screen.dart';
 import 'drag_interaction_screen.dart';
 import 'erase_interaction_screen.dart';
 import 'gradient_interaction_screen.dart';
+import 'modify_interaction_screen.dart';
 import 'opacity_interaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -164,6 +165,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         StrokeInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Modify'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ModifyInteractionScreen(
                                       objectPoints: _objectPoints,
                                     ),
                                   ),
