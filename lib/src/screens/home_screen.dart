@@ -3,6 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:playwithme/src/constants/app_config.dart';
 import 'package:playwithme/src/helper/helper.dart';
 import 'package:playwithme/src/screens/color_interaction_screen.dart';
+import 'package:playwithme/src/screens/stroke_interaction_screen.dart';
 
 import '../object_painter.dart';
 import 'blur_interaction_screen.dart';
@@ -148,6 +149,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         OpacityInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Stroke'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        StrokeInteractionScreen(
                                       objectPoints: _objectPoints,
                                     ),
                                   ),

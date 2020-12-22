@@ -14,6 +14,7 @@ class ObjectPainter extends CustomPainter {
     this.objectBlurSigma = -1,
     this.gradientColorList,
     this.objectOpacity = -1,
+    this.strokeWidth = -1,
   });
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
@@ -25,6 +26,7 @@ class ObjectPainter extends CustomPainter {
   final double objectBlurSigma;
   final List<Color> gradientColorList;
   final double objectOpacity;
+  final double strokeWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -39,8 +41,16 @@ class ObjectPainter extends CustomPainter {
     if (objectOpacity != -1) {
       currentObjectOpacity = objectOpacity;
     }
+    double currentStrokeWidth = AppConfig.strokeWidth;
+    PaintingStyle currentPaintingStyle = PaintingStyle.fill;
+    if (strokeWidth != -1) {
+      currentStrokeWidth = strokeWidth;
+      currentPaintingStyle = PaintingStyle.stroke;
+    }
     var objectPaint = Paint()
       ..color = objectColor.withAlpha(currentObjectOpacity?.toInt())
+      ..strokeWidth = currentStrokeWidth
+      ..style = currentPaintingStyle
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, currentObjectBlurSigma)
       ..shader = gradientColorList != null
           ? ui.Gradient.linear(

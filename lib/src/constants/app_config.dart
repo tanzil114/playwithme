@@ -14,4 +14,7 @@ class AppConfig {
   static const double objectOpacity = 255;
   static const double objectOpacityMin = 0.0;
   static const double objectOpacityMax = 255;
+  static const double strokeWidth = 0.0;
+  static const double objectStrokeMin = 0.0;
+  static const double objectStrokeMax = 100;
 }
