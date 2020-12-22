@@ -3,16 +3,18 @@ import 'constants/app_config.dart';
 import 'dart:ui' as ui;
 
 class ObjectPainter extends CustomPainter {
-  ObjectPainter(
-      {this.objectPoints,
-      this.shouldJoinPoints,
-      this.objectColor = AppConfig.objectColor,
-      this.shouldBrushPaint = false,
-      this.brushContactPoints,
-      this.brushColor,
-      this.erasePoints,
-      this.objectBlurSigma = -1,
-      this.gradientColorList});
+  ObjectPainter({
+    this.objectPoints,
+    this.shouldJoinPoints,
+    this.objectColor = AppConfig.objectColor,
+    this.shouldBrushPaint = false,
+    this.brushContactPoints,
+    this.brushColor,
+    this.erasePoints,
+    this.objectBlurSigma = -1,
+    this.gradientColorList,
+    this.objectOpacity = -1,
+  });
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
   final Color objectColor;
@@ -22,6 +24,7 @@ class ObjectPainter extends CustomPainter {
   final List<Offset> erasePoints;
   final double objectBlurSigma;
   final List<Color> gradientColorList;
+  final double objectOpacity;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -32,8 +35,12 @@ class ObjectPainter extends CustomPainter {
     if (objectBlurSigma != -1) {
       currentObjectBlurSigma = objectBlurSigma;
     }
+    double currentObjectOpacity = AppConfig.objectOpacity;
+    if (objectOpacity != -1) {
+      currentObjectOpacity = objectOpacity;
+    }
     var objectPaint = Paint()
-      ..color = objectColor
+      ..color = objectColor.withAlpha(currentObjectOpacity?.toInt())
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, currentObjectBlurSigma)
       ..shader = gradientColorList != null
           ? ui.Gradient.linear(

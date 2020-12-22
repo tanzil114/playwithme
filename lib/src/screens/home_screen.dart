@@ -10,6 +10,7 @@ import 'brush_interaction_screen.dart';
 import 'drag_interaction_screen.dart';
 import 'erase_interaction_screen.dart';
 import 'gradient_interaction_screen.dart';
+import 'opacity_interaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -132,6 +133,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         GradientInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Opacity'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        OpacityInteractionScreen(
                                       objectPoints: _objectPoints,
                                     ),
                                   ),

@@ -11,4 +11,7 @@ class AppConfig {
   static const double objectBlurSigma = 0.0;
   static const double objectBlurSigmaMin = 0.0;
   static const double objectBlurSigmaMax = 40.0;
+  static const double objectOpacity = 255;
+  static const double objectOpacityMin = 0.0;
+  static const double objectOpacityMax = 255;
 }
