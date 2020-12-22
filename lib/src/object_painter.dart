@@ -10,6 +10,7 @@ class ObjectPainter extends CustomPainter {
     this.brushContactPoints,
     this.brushColor,
     this.erasePoints,
+    this.objectBlurSigma = -1,
   });
   final List<Offset> objectPoints;
   final bool shouldJoinPoints;
@@ -18,13 +19,20 @@ class ObjectPainter extends CustomPainter {
   final List<Offset> brushContactPoints;
   final Color brushColor;
   final List<Offset> erasePoints;
+  final double objectBlurSigma;
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
       ..color = AppConfig.objectColor
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 1);
-    var objectPaint = Paint()..color = objectColor;
+    double currentObjectBlurSigma = AppConfig.objectBlurSigma;
+    if (objectBlurSigma != -1) {
+      currentObjectBlurSigma = objectBlurSigma;
+    }
+    var objectPaint = Paint()
+      ..color = objectColor
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, currentObjectBlurSigma);
     if (!shouldJoinPoints) {
       objectPoints.forEach((e) {
         canvas.drawCircle(e, AppConfig.objectPointRadius, paint);

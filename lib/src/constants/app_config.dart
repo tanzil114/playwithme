@@ -7,4 +7,8 @@ class AppConfig {
   static const double objectPointRadius = 5.0;
   static const double brushRadius = 5.0;
   static const double eraseRadius = 10.0;
+  static const double blurRadius = 3.0;
+  static const double objectBlurSigma = 0.0;
+  static const double objectBlurSigmaMin = 0.0;
+  static const double objectBlurSigmaMax = 40.0;
 }

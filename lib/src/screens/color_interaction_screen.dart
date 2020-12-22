@@ -35,6 +35,13 @@ class _ColorInteractionScreenState extends State<ColorInteractionScreen> {
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
+            child: Icon(Icons.arrow_back),
+            backgroundColor: Colors.red,
+            label: 'Back',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => Navigator.pop(context),
+          ),
+          SpeedDialChild(
             child: Icon(Icons.colorize),
             backgroundColor: Colors.red,
             label: 'Color',
@@ -48,13 +55,6 @@ class _ColorInteractionScreenState extends State<ColorInteractionScreen> {
                   setState(() => currentColor = pickerColor);
                   Navigator.of(context).pop();
                 }),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.arrow_back),
-            backgroundColor: Colors.red,
-            label: 'Back',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Navigator.pop(context),
           ),
           SpeedDialChild(
             child: Icon(Icons.info),

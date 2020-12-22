@@ -37,6 +37,13 @@ class _BrushInteractionScreenState extends State<BrushInteractionScreen> {
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
+            child: Icon(Icons.arrow_back),
+            backgroundColor: Colors.red,
+            label: 'Back',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => Navigator.pop(context),
+          ),
+          SpeedDialChild(
             child: Icon(Icons.colorize),
             backgroundColor: Colors.red,
             label: 'Color',
@@ -50,13 +57,6 @@ class _BrushInteractionScreenState extends State<BrushInteractionScreen> {
                   setState(() => currentColor = pickerColor);
                   Navigator.of(context).pop();
                 }),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.arrow_back),
-            backgroundColor: Colors.red,
-            label: 'Back',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Navigator.pop(context),
           ),
           SpeedDialChild(
             child: Icon(Icons.info),

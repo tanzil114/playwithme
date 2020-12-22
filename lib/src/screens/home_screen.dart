@@ -5,6 +5,7 @@ import 'package:playwithme/src/helper/helper.dart';
 import 'package:playwithme/src/screens/color_interaction_screen.dart';
 
 import '../object_painter.dart';
+import 'blur_interaction_screen.dart';
 import 'brush_interaction_screen.dart';
 import 'drag_interaction_screen.dart';
 import 'erase_interaction_screen.dart';
@@ -101,6 +102,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         EraseInteractionScreen(
+                                      objectPoints: _objectPoints,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text('Blur'),
+                              onTap: () {
+                                Navigator.pop(dialogContext);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BlurInteractionScreen(
                                       objectPoints: _objectPoints,
                                     ),
                                   ),
